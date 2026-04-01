@@ -196,6 +196,9 @@
         <mxCell id="gqFq8VgOgMAwN8o2qIwI-58" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontColor=#999999;fontSize=8;" value="logs and metrics" vertex="1">
           <mxGeometry height="30" width="87" x="261" y="435" as="geometry" />
         </mxCell>
+        <mxCell id="gqFq8VgOgMAwN8o2qIwI-59" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="CloudFormation" vertex="1">
+          <mxGeometry height="30" width="90" x="580" y="180" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
