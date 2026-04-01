@@ -1,21 +1,25 @@
 async function getData() {
-    const response = await fetch('YOUR_API_GATEWAY_URL');
-    const data = await response.json();
+    try {
+        const response = await fetch('YOUR_API_GATEWAY_URL/data'); // Add the full URL here
+        const data = await response.json();
 
-    const results = document.getElementById('results');
-    results.innerHTML = '';
+        const results = document.getElementById('results');
+        results.innerHTML = '';
 
-    data.forEach((item) => {
-        const li = document.createElement('li');
-        li.textContent = item.name;
-        results.appendChild(li);
-    });
-}
+        if (data.length === 0) {
+            results.textContent = 'No data available.';
+            return;
+        }
 
-// examples... might not work irl
-
-async function checkEC2() {
-    const response = await fetch('EC2_ALB_URL/status');
-    const text = await response.text();
-    alert(text); // simple pop-up or append to page
+        // Display each greenhouse measurement in a readable format
+        data.forEach((item) => {
+            const li = document.createElement('li');
+            li.textContent = `${item.KasvihuoneID} | ${item.LaiteTyyppi} = ${item.Mittausarvo} | ${item.AikaLeima}`;
+            results.appendChild(li);
+        });
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        const results = document.getElementById('results');
+        results.textContent = 'Error fetching data.';
+    }
 }
