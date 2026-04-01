@@ -1,0 +1,161 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: DynamoDB tables for KasvihuoneKanta project with preloaded data
+
+Resources:
+    # DynamoDB table Kasvihuoneet
+    KasvihuoneetTable:
+        Type: AWS::DynamoDB::Table
+        Properties:
+            TableName: Kasvihuoneet
+            BillingMode: PAY_PER_REQUEST
+            AttributeDefinitions:
+                - AttributeName: KasvihuoneID
+                  AttributeType: S
+                - AttributeName: AikaLeima
+                  AttributeType: S
+            KeySchema:
+                - AttributeName: KasvihuoneID
+                  KeyType: HASH
+                - AttributeName: AikaLeima
+                  KeyType: RANGE
+
+    # DynamoDB table Halytykset
+    HalytyksetTable:
+        Type: AWS::DynamoDB::Table
+        Properties:
+            TableName: Halytykset
+            BillingMode: PAY_PER_REQUEST
+            AttributeDefinitions:
+                - AttributeName: Halytys
+                  AttributeType: S
+                - AttributeName: AikaLeima
+                  AttributeType: S
+            KeySchema:
+                - AttributeName: Halytys
+                  KeyType: HASH
+                - AttributeName: AikaLeima
+                  KeyType: RANGE
+
+    # Lambda function to populate tables
+    PopulateLambda:
+        Type: AWS::Lambda::Function
+        Properties:
+            FunctionName: PopulateDynamoData
+            Runtime: nodejs18.x
+            Handler: index.handler
+            Role: !GetAtt PopulateLambdaRole.Arn
+            Code:
+                ZipFile: |
+                    const AWS = require('aws-sdk');
+                    const dynamo = new AWS.DynamoDB.DocumentClient();
+                    exports.handler = async (event) => {
+                        const tableName = event.TableName;
+                        const items = event.Items;
+                        for (const item of items) {
+                            await dynamo.put({ TableName: tableName, Item: item }).promise();
+                        }
+                        return { Status: 'Success' };
+                    };
+
+    # IAM Role for Lambda
+    PopulateLambdaRole:
+        Type: AWS::IAM::Role
+        Properties:
+            RoleName: PopulateLambdaRole
+            AssumeRolePolicyDocument:
+                Version: '2012-10-17'
+                Statement:
+                    - Effect: Allow
+                      Principal:
+                          Service: lambda.amazonaws.com
+                      Action: sts:AssumeRole
+            Policies:
+                - PolicyName: DynamoPutPolicy
+                  PolicyDocument:
+                      Version: '2012-10-17'
+                      Statement:
+                          - Effect: Allow
+                            Action:
+                                - dynamodb:PutItem
+                            Resource: '*'
+
+    # Custom Resource to populate Kasvihuoneet table
+    PopulateKasvihuoneet:
+        Type: Custom::PopulateKasvihuoneet
+        Properties:
+            ServiceToken: !GetAtt PopulateLambda.Arn
+            TableName: !Ref KasvihuoneetTable
+            Items:
+                - KasvihuoneID: GH1
+                  AikaLeima: '2026-03-14T12:00'
+                  LaiteID: LAMPO01
+                  LaiteTyyppi: lampotila
+                  Mittausarvo: 22.5
+                - KasvihuoneID: GH1
+                  AikaLeima: '2026-03-14T12:05'
+                  LaiteID: KOST01
+                  LaiteTyyppi: kosteus
+                  Mittausarvo: 65
+                - KasvihuoneID: GH1
+                  AikaLeima: '2026-03-14T12:10'
+                  LaiteID: VALO01
+                  LaiteTyyppi: valo
+                  Mittausarvo: 300
+                - KasvihuoneID: GH2
+                  AikaLeima: '2026-03-14T12:00'
+                  LaiteID: LAMPO02
+                  LaiteTyyppi: lampotila
+                  Mittausarvo: 30.2
+                - KasvihuoneID: GH2
+                  AikaLeima: '2026-03-14T12:05'
+                  LaiteID: KOST02
+                  LaiteTyyppi: kosteus
+                  Mittausarvo: 40
+                - KasvihuoneID: GH2
+                  AikaLeima: '2026-03-14T12:10'
+                  LaiteID: VALO02
+                  LaiteTyyppi: valo
+                  Mittausarvo: 150
+                - KasvihuoneID: GH3
+                  AikaLeima: '2026-03-14T12:00'
+                  LaiteID: LAMPO03
+                  LaiteTyyppi: lampotila
+                  Mittausarvo: 18.0
+                - KasvihuoneID: GH3
+                  AikaLeima: '2026-03-14T12:05'
+                  LaiteID: KOST03
+                  LaiteTyyppi: kosteus
+                  Mittausarvo: 80
+                - KasvihuoneID: GH3
+                  AikaLeima: '2026-03-14T12:10'
+                  LaiteID: VALO03
+                  LaiteTyyppi: valo
+                  Mittausarvo: 500
+
+    # Custom Resource to populate Halytykset table
+    PopulateHalytykset:
+        Type: Custom::PopulateHalytykset
+        Properties:
+            ServiceToken: !GetAtt PopulateLambda.Arn
+            TableName: !Ref HalytyksetTable
+            Items:
+                - Halytys: ACTIVE
+                  AikaLeima: '2026-03-14T12:02'
+                  LaiteID: LAMPO02
+                  KasvihuoneID: GH2
+                  Lisatiedot: Lampotila liian korkea
+                - Halytys: ACTIVE
+                  AikaLeima: '2026-03-14T12:06'
+                  LaiteID: KOST02
+                  KasvihuoneID: GH2
+                  Lisatiedot: Kosteus liian alhainen
+                - Halytys: ACTIVE
+                  AikaLeima: '2026-03-14T12:07'
+                  LaiteID: KOST03
+                  KasvihuoneID: GH3
+                  Lisatiedot: Kosteus liian korkea
+                - Halytys: RESOLVED
+                  AikaLeima: '2026-03-14T12:15'
+                  LaiteID: LAMPO02
+                  KasvihuoneID: GH2
+                  Lisatiedot: Lampotila normalisoitunut
