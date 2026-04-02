@@ -1,0 +1,142 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Lambda + API Gateway POST endpoint for Kasvihuone write demo using existing LabRole
+
+Resources:
+    # Lambda function
+    WriteKasvihuoneLambda:
+        Type: AWS::Lambda::Function
+        Properties:
+            FunctionName: WriteKasvihuoneDemo
+            Runtime: nodejs18.x
+            Handler: index.handler
+            Role: arn:aws:iam::381492237197:role/LabRole
+            Timeout: 10
+            Environment:
+                Variables:
+                    TABLE_NAME: Kasvihuone
+            Code:
+                ZipFile: |
+                    const { DynamoDBClient, PutItemCommand } = require("@aws-sdk/client-dynamodb");
+
+                    const client = new DynamoDBClient({ region: process.env.AWS_REGION });
+
+                    exports.handler = async (event) => {
+                        try {
+                            const body = JSON.parse(event.body);
+
+                            // DynamoDB v3 requires attribute types
+                            const item = {
+                                KasvihuoneID: { S: body.KasvihuoneID },
+                                AikaLeima: { S: body.AikaLeima },
+                                LaiteID: { S: body.LaiteID },
+                                LaiteTyyppi: { S: body.LaiteTyyppi },
+                                Mittausarvo: { N: body.Mittausarvo.toString() }
+                            };
+
+                            await client.send(new PutItemCommand({
+                                TableName: process.env.TABLE_NAME,
+                                Item: item
+                            }));
+
+                            return {
+                                statusCode: 200,
+                                headers: {
+                                    "Access-Control-Allow-Origin": "*",
+                                    "Access-Control-Allow-Headers": "*",
+                                    "Access-Control-Allow-Methods": "OPTIONS,POST"
+                                },
+                                body: JSON.stringify({
+                                    message: "Item written successfully",
+                                    item: item
+                                })
+                            };
+                        } catch (error) {
+                            return {
+                                statusCode: 500,
+                                headers: {
+                                    "Access-Control-Allow-Origin": "*"
+                                },
+                                body: JSON.stringify({
+                                    message: "Error writing item",
+                                    error: error.message
+                                })
+                            };
+                        }
+                    };
+
+    # API Gateway REST API
+    KasvihuoneApi:
+        Type: AWS::ApiGateway::RestApi
+        Properties:
+            Name: KasvihuoneWriteApi
+            Description: API for writing records to Kasvihuone table
+
+    # API Resource
+    KasvihuoneResource:
+        Type: AWS::ApiGateway::Resource
+        Properties:
+            ParentId: !GetAtt KasvihuoneApi.RootResourceId
+            PathPart: write
+            RestApiId: !Ref KasvihuoneApi
+
+    # POST Method
+    KasvihuonePostMethod:
+        Type: AWS::ApiGateway::Method
+        Properties:
+            RestApiId: !Ref KasvihuoneApi
+            ResourceId: !Ref KasvihuoneResource
+            HttpMethod: POST
+            AuthorizationType: NONE
+            Integration:
+                Type: AWS_PROXY
+                IntegrationHttpMethod: POST
+                Uri: !Sub arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${WriteKasvihuoneLambda.Arn}/invocations
+
+    # OPTIONS Method for CORS
+    KasvihuoneOptionsMethod:
+        Type: AWS::ApiGateway::Method
+        Properties:
+            RestApiId: !Ref KasvihuoneApi
+            ResourceId: !Ref KasvihuoneResource
+            HttpMethod: OPTIONS
+            AuthorizationType: NONE
+            Integration:
+                Type: MOCK
+                RequestTemplates:
+                    application/json: '{"statusCode": 200}'
+                IntegrationResponses:
+                    - StatusCode: 200
+                      ResponseParameters:
+                          method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+                          method.response.header.Access-Control-Allow-Methods: "'OPTIONS,POST'"
+                          method.response.header.Access-Control-Allow-Origin: "'*'"
+            MethodResponses:
+                - StatusCode: 200
+                  ResponseParameters:
+                      method.response.header.Access-Control-Allow-Headers: true
+                      method.response.header.Access-Control-Allow-Methods: true
+                      method.response.header.Access-Control-Allow-Origin: true
+
+    # Permission for API Gateway to invoke Lambda
+    LambdaApiPermission:
+        Type: AWS::Lambda::Permission
+        Properties:
+            FunctionName: !Ref WriteKasvihuoneLambda
+            Action: lambda:InvokeFunction
+            Principal: apigateway.amazonaws.com
+            SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:381492237197:${KasvihuoneApi}/*/POST/write
+
+    # API Deployment
+    KasvihuoneApiDeployment:
+        Type: AWS::ApiGateway::Deployment
+        DependsOn:
+            - KasvihuonePostMethod
+            - KasvihuoneOptionsMethod
+        Properties:
+            RestApiId: !Ref KasvihuoneApi
+            StageName: prod
+
+Outputs:
+    ApiUrl:
+        Description: API Gateway endpoint URL
+        Value: !Sub https://${KasvihuoneApi}.execute-api.${AWS::Region}.amazonaws.com/prod/write

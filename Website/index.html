@@ -2,15 +2,52 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>DemoWebsite</title>
+        <title>Kasvihuone Write Demo</title>
     </head>
     <body>
-        <h1>AWS Final Project Demo By Jun Fengari</h1>
-        <p>Press the button to retrieve the latest data from DynamoDB!</p>
+        <h1>Kasvihuone Write Demo</h1>
+        <p>Welcome to Jun's test website for Cloud Architecture!</p>
+        <p>Press the button to write a test record to DynamoDB.</p>
+        <button id="writeDataBtn">Write Test Record</button>
+        <pre id="writeOutput"></pre>
 
-        <button onclick="getData()">Get Latest Data</button>
+        <script>
+            // --- CONFIG ---
+            const API_ENDPOINT =
+                'https://5qtbtl4fqb.execute-api.us-east-1.amazonaws.com/prod/write'; // replace with your API endpoint
 
-        <ul id="results"></ul>
+            // Event listener for write button
+            document
+                .getElementById('writeDataBtn')
+                .addEventListener('click', async () => {
+                    document.getElementById('writeOutput').textContent =
+                        'Sending test record...';
+
+                    const testRecord = {
+                        KasvihuoneID: 'GH_TEST',
+                        AikaLeima: new Date().toISOString(),
+                        LaiteID: 'TEST01',
+                        LaiteTyyppi: 'lampotila',
+                        Mittausarvo: 99,
+                    };
+
+                    try {
+                        const res = await fetch(API_ENDPOINT, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(testRecord),
+                        });
+                        const result = await res.json();
+                        document.getElementById('writeOutput').textContent =
+                            'Success! Record written: ' +
+                            JSON.stringify(result);
+                    } catch (err) {
+                        document.getElementById('writeOutput').textContent =
+                            'Error: ' + err;
+                    }
+                });
+        </script>
     </body>
 </html>

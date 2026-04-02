@@ -1,0 +1,15 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: S3 bucket to host the Kasvihuone serverless frontend website
+
+Resources:
+    KasvihuoneFrontendBucket:
+        Type: AWS::S3::Bucket
+        Properties:
+            BucketName: kasvihuone-frontend-demo
+            WebsiteConfiguration:
+                IndexDocument: index.html
+
+Outputs:
+    FrontendWebsiteURL:
+        Description: 'URL of the S3 static website'
+        Value: !GetAtt KasvihuoneFrontendBucket.WebsiteURL
