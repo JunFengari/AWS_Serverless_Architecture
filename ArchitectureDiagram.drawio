@@ -17,10 +17,10 @@
           <mxGeometry height="30" width="30" as="geometry" />
         </mxCell>
         <mxCell id="WEweU8W6-TqeUW9BZhhN-19" parent="1" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=default;verticalAlign=top;aspect=fixed;imageAspect=0;image=data:image/png,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAIAAAADnC86AAAAAXNSR0IArs4c6QAABHtJREFUWAntV11Mm1UYXukv/YN+/RG6dW1ZBRzCiiCIghcyEmLmdD9ebEaXZUYXTbzb1F2Y6MVijIk3S3RL/I27mIkXzkWXjOgcDgYbso0N1s2OFihQ+gf9/6+PNiFf2u8cqBK5WfNdvN973ud5zjnf+77nlHfsa92G9fiVrYfo35oPhP+3nV+3rRasZokq+Wajrm2TplmtMMOWilVCgVTIl6Qy8VQ6Gk0EAuEpX2hyxjvqXBiGvRpOmrBEVNFW+4rVvEderp10D057Rv6cvegPOSMJP/SgCm3MQCZmGIVRo7Q8Yuh9tvX9cMxzffL74bvfxJNLlBnwSHXcXndwu/XoXdcvV+9961wYyuWyFJblIR6vzKhrb334pbqN3X3XPxqyfbk8VGBwr7in+Zil+umTP+/wBu0FAPor5udwD+LRKLfs7TyhlFZfGD3OCeFOro76Q6cvHixVlS0A7OlfD4CH7WTb3MLIl27rUX6ZkB1akg3sM9uOgIeE4t5qf8ixWdv61s7fLo+fHHP8EEsukvDFfqRkk+n5p7a+ns1lwVMckPcQhW9PnUMadzW8ud36NvBTnmvuxQlfyBGKzmMdqUwsk01hWUJ+OapLIa1i5MYq1VaDtgUlZ5+7dObS4U2ax/RMY8nCjMI0ZPvqTP/hMh4fFWzQtoLIWrO3QrZRJJCJhTJIQj6RiiTTkaWIyxu8j+9669pZVHM2l4Fek3m3P+wsUTjsxNzzGLBguXhIFCQ/invG+wdplDu5sLdYMQkDv66ybveTn1B2EjFgoHxjgnDYiflShNtrD7RY9r/Q8THqlRSGr17yVseTwXQmKZNoInEvJ+/gnS94PH4iHX6t90enZ3hg/NSke4AdKZOoc7kMeNhOts3v2iVjvy/bjxp3THtHgtG5ZQ/biCb8NlcfsvfKnc9FAmlP8zuP176MAORXJpuEgQx/ov4Q2h+SA8FsbN4mCm+p6sRh4A5MFGPYnmwu7fLdQE/2huyNpp3PtR3XVlhS6ZhKbkC92Wb6Xuw8gYDiI4u7jkGNz6OWm9gaFDu3IWef68cjl2ibzLt6mt/VqxvnA+P2+f5R+3fd1iP3z/9eAOdOLgQhIVXU/Cogyr+G456BiVOf/tQ75jjrXrQ9VFlfKTdcvv1ZcTBxxWhSLZZ9xYBVeipk+gujH+KYIsVTVyynVRSJMe9n5KZAiNi2EEMURk8uF1fijkEX4BwV8MXAkioiDyEKI18Ww9O4YXFS051oHcCCgRJGFAYGn5neOEm86HqUZplH0YQD/17YRGmWKwv7VurYxBWjS5OvACsLA6xW1JDYKX5Gaf5PwridVzMNXQ1voBtTZNhDqIKO+lf1TJPTc5XtL7aJ9+p8KO4xvS3v1VR14mrt8t+c9d1EusaSS/FUMJmKiIQyiVApESmR/Dib9eptJl27Y+HK+ZEPPEv3isXYnhWE86E443BNB3U104ju/4+YAv8h8H8ingxhEpjNrP/WnH/MsTBEOknZqrBXJVyAWZNXWjmtiQCJ5IEwaWfW3L9uW/0XLJ7uYOT0OykAAAAASUVORK5CYII=;" value="" vertex="1">
-          <mxGeometry height="42" width="42" x="235" y="190" as="geometry" />
+          <mxGeometry height="42" width="42" x="230" y="190" as="geometry" />
         </mxCell>
         <mxCell id="WEweU8W6-TqeUW9BZhhN-20" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="S3" vertex="1">
-          <mxGeometry height="30" width="56" x="227" y="230" as="geometry" />
+          <mxGeometry height="30" width="56" x="223" y="230" as="geometry" />
         </mxCell>
         <mxCell id="WEweU8W6-TqeUW9BZhhN-22" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="API Gateway" vertex="1">
           <mxGeometry height="30" width="76" x="217" y="350.5" as="geometry" />
@@ -68,7 +68,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="gqFq8VgOgMAwN8o2qIwI-28" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=8;" value="frontend provided through S3" vertex="1">
-          <mxGeometry height="30" width="75" x="146" y="212" as="geometry" />
+          <mxGeometry height="30" width="75" x="142" y="212" as="geometry" />
         </mxCell>
         <mxCell id="gqFq8VgOgMAwN8o2qIwI-29" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=8;" value="&lt;div&gt;Button Press:&lt;/div&gt;HTTP POST request" vertex="1">
           <mxGeometry height="30" width="80" x="170" y="259" as="geometry" />
@@ -96,8 +96,8 @@
         </mxCell>
         <mxCell id="gqFq8VgOgMAwN8o2qIwI-41" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" value="">
           <mxGeometry height="50" relative="1" width="50" as="geometry">
-            <mxPoint x="140" y="212.01694915254245" as="sourcePoint" />
-            <mxPoint x="235" y="212.01694915254245" as="targetPoint" />
+            <mxPoint x="136" y="212" as="sourcePoint" />
+            <mxPoint x="221" y="212.01694915254245" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="gqFq8VgOgMAwN8o2qIwI-42" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#CCCCCC;" value="">
