@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36">
   <diagram name="Page-1" id="yKXaiP5ifbctchbDqv_n">
-    <mxGraphModel dx="992" dy="535" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1603" dy="865" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -201,6 +201,18 @@
         </mxCell>
         <mxCell id="y1nLzz3Kho7hChiKBTA0-4" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="WAF" vertex="1">
           <mxGeometry height="30" width="60" x="83" y="226" as="geometry" />
+        </mxCell>
+        <mxCell id="y1nLzz3Kho7hChiKBTA0-5" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;rounded=0;strokeColor=#666666;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <Array as="points">
+              <mxPoint x="113" y="322" />
+            </Array>
+            <mxPoint x="233" y="322" as="sourcePoint" />
+            <mxPoint x="113" y="260" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="y1nLzz3Kho7hChiKBTA0-7" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=8;fontColor=#666666;" value="WAF protection" vertex="1">
+          <mxGeometry height="30" width="120" x="115" y="300" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
