@@ -1,13 +1,14 @@
-Under Construction ...
-
 # Serverless AWS Architecture
 
 Toteutin AWS-Arkkitehtuurikurssin lopputyönä tyypillisen serverless-arkkitehtuurin. Arkkitehtuurin päätavoite oli yhdistää käyttäjän interaktio verkkosivulla DynamoDB- tietokantaan.
-Architecture path img here
 
-Architecture img here
+<p align="center">
+  <img src="https://github.com/JunFengari/AWS_Serverless_Architecture/blob/main/Images/ArchitectureDiagram.png?raw=true" alt="AWS Serverless Architecture Diagram" width="600">
+</p>
 
 Sivuston väliaikainen testauslinkki: http://kasvihuone-frontend-demo.s3-website-us-east-1.amazonaws.com/
+
+------
 
 ### Dokumentaatio:
 
